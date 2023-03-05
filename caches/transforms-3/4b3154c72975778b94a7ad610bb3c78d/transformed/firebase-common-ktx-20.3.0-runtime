@@ -1,9 +1,0 @@
-com.google.firebase.ktx.BuildConfig
-com.google.firebase.ktx.Firebase
-com.google.firebase.ktx.FirebaseCommonKtxRegistrar
-com.google.firebase.ktx.FirebaseCommonKtxRegistrar$getComponents$$inlined$coroutineDispatcher$1
-com.google.firebase.ktx.FirebaseCommonKtxRegistrar$getComponents$$inlined$coroutineDispatcher$2
-com.google.firebase.ktx.FirebaseCommonKtxRegistrar$getComponents$$inlined$coroutineDispatcher$3
-com.google.firebase.ktx.FirebaseCommonKtxRegistrar$getComponents$$inlined$coroutineDispatcher$4
-com.google.firebase.ktx.FirebaseKt
-com.google.firebase.ktx.FirebaseKt$coroutineDispatcher$1
