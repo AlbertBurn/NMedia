@@ -12,11 +12,11 @@ data class Post(
     var likes: Int = 17,
     var shares: Int = 1099999,
     val videoUrl: String? = null,
-    val attachment: Attachment? = null
+    var isRead: Boolean = false
 )
 
 data class Attachment(
-    val url: String,
-    val description: String,
-    val type: String
+    var url: String,
+    var description: String,
+    var type: String
 )

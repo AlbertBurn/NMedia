@@ -25,7 +25,8 @@
     <string name="channel_like_description">Текст уведомления лайка</string>
     <string name="channel_new_post_description">Текст уведомления нового поста</string>
     <string name="notification_user_new_post">Пользователь %1$ создал пост</string>
-    <string name="error_loading">Please, try again later</string>
-    <string name="retry_loading">Please, retry</string>
-    <string name="empty_posts">Sorry, we haven\'t any posts</string>
+    <string name="error_loading">Пожалуйста, попробуйте еще раз позже</string>
+    <string name="retry_loading">Пожалуйста, попробуй еще раз</string>
+    <string name="empty_posts">Извините, у нас нет постов</string>
+    <string name="have_new_posts">Свежие записи</string>
 </resources>

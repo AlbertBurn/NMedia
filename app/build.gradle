@@ -65,6 +65,7 @@ dependencies {
     def glide_version = "4.12.0"
     def okhttplogging_version = "4.10.0"
     def retrofit_version = "2.9.0"
+    def coroutines_version = "1.6.4"
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
@@ -80,6 +81,7 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     // Import the Firebase BoM
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
@@ -92,6 +94,7 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:$glide_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"

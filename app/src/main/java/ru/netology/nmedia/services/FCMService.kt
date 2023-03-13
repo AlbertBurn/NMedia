@@ -1,15 +1,11 @@
 package ru.netology.nmedia.service
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -35,35 +31,35 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
 
-//        message.data[action]?.let {
-//            when (it) {
-//                likeChannelId -> handleLike(gson.fromJson(message.data[content], Like::class.java))
-//                newPostChannelId -> handlerNewPost(gson.fromJson(message.data[content], NewPost::class.java))
-//            }
-//        }
+        message.data[action]?.let {
+            when (it) {
+                likeChannelId -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+                newPostChannelId -> handlerNewPost(gson.fromJson(message.data[content], NewPost::class.java))
+            }
+        }
     }
 
     override fun onNewToken(token: String) {
-        Log.d(TAG, "New token: $token")
+        Log.d(TAG, "Refreshed token: $token")
     }
 
     private fun createNotificationChannels() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val nameLike = getString(R.string.channel_like_name)
-//            val nameNewPost = getString(R.string.channel_newPost_name)
-//            val descriptionTextLike = getString(R.string.channel_like_description)
-//            val descriptionTextNewPost = getString(R.string.channel_new_post_description)
-//            val importance = NotificationManager.IMPORTANCE_DEFAULT
-//            val channelLike = NotificationChannel(likeChannelId, nameLike, importance).apply {
-//                description = descriptionTextLike
-//            }
-//            val channelNewPost = NotificationChannel(newPostChannelId, nameNewPost, importance).apply {
-//                description = descriptionTextNewPost
-//            }
-//            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//            manager.createNotificationChannel(channelLike)
-//            manager.createNotificationChannel(channelNewPost)
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val nameLike = getString(R.string.channel_like_name)
+            val nameNewPost = getString(R.string.channel_newPost_name)
+            val descriptionTextLike = getString(R.string.channel_like_description)
+            val descriptionTextNewPost = getString(R.string.channel_new_post_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channelLike = NotificationChannel(likeChannelId, nameLike, importance).apply {
+                description = descriptionTextLike
+            }
+            val channelNewPost = NotificationChannel(newPostChannelId, nameNewPost, importance).apply {
+                description = descriptionTextNewPost
+            }
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channelLike)
+            manager.createNotificationChannel(channelNewPost)
+        }
     }
 
     private fun handleLike(content: Like) {
@@ -103,8 +99,6 @@ class FCMService : FirebaseMessagingService() {
 //        NotificationManagerCompat.from(this)
 //            .notify(Random.nextInt(100_000), notification)
     }
-
-
 }
 
 data class Like(

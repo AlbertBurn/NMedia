@@ -17,11 +17,11 @@ import ru.netology.nmedia.databinding.ActivityAppBinding
 import ru.netology.nmedia.viewmodel.DataModel
 
 class AppActivity : AppCompatActivity() {
-    private val worker = WorkerThread().apply { start() }
-    private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg")
-    private val index = 0
-
-    private val dataModel : DataModel by viewModels()
+//    private val worker = WorkerThread().apply { start() }
+//    private val urls = listOf("netology.jpg", "sber.jpg", "tcs.jpg")
+//    private val index = 0
+//
+//    private val dataModel : DataModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

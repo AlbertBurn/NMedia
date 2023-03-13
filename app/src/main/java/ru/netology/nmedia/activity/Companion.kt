@@ -9,8 +9,5 @@ class Companion {
         var Bundle.textArg:String?
             set(value) = putString(POST_KEY, value)
             get() = getString(POST_KEY)
-//        var Bundle.longArg:Long
-//            set(value) = putLong(POST_KEY, value)
-//            get() = getLong(POST_KEY)
     }
 }

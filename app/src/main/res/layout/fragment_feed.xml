@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".activity.FeedFragment">
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/newerPostLoad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/margin_default"
+        android:layout_gravity="bottom|end"
+
+        android:text="@string/have_new_posts"
+        app:icon="@drawable/ic_baseline_arrow_upward_24"/>
+
     <TextView
         android:id="@+id/retryTitle"
         android:layout_width="wrap_content"
