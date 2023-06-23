@@ -13,7 +13,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentSignBinding
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.util.AndroidUtils
-import ru.netology.nmedia.viewModel.SignViewModel
+import ru.netology.nmedia.viewmodel.SignViewModel
 import ru.netology.nmedia.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.auth.AppAuth

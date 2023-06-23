@@ -17,6 +17,7 @@ import kotlin.random.Random
 import dagger.hilt.EntryPoint
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
+import kotlin.text.Typography.dagger
 
 @AndroidEntryPoint
 class FCMService : FirebaseMessagingService() {
