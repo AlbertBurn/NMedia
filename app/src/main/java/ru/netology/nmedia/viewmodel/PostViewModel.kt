@@ -2,6 +2,8 @@ package ru.netology.nmedia.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
@@ -19,6 +21,9 @@ import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 import javax.inject.Inject
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.switchMap
 
 private val empty = Post(
     id = 0,
@@ -37,20 +42,18 @@ private val empty = Post(
 @HiltViewModel
 class PostViewModel @Inject constructor(
     appAuth: AppAuth,
-    private  val repository: PostRepository,
+    private val repository: PostRepository,
 ) : ViewModel() {
 
-    val data: LiveData<FeedModel> = appAuth.authStateFlow.flatMapLatest { (myId, _) ->
+    val data: Flow<PagingData<Post>> = appAuth.authStateFlow.flatMapLatest { (myId, _) ->
 
         repository.data
             .map { posts ->
-                FeedModel(
-                    posts.map { post ->
-                        post.copy(ownedByMe = post.authorId == myId)
-                    }, posts.isEmpty()
-                )
+                posts.map { post ->
+                    post.copy(ownedByMe = post.authorId == myId)
+                }
             }
-    }.asLiveData(Dispatchers.Default)
+    }.flowOn(Dispatchers.Default)
 
     private val _state = MutableLiveData(FeedModelState())
     val state: LiveData<FeedModelState>
@@ -65,12 +68,12 @@ class PostViewModel @Inject constructor(
     val photoState: LiveData<PhotoModel?>
         get() = _photoState
 
-    val newerCount: LiveData<Int> = data.switchMap {
-        val id = it.posts.firstOrNull()?.id ?: 0L
-        repository.getNewer(id)
-            .catch { e -> e.printStackTrace() }
-            .asLiveData(Dispatchers.Default)
-    }
+//    val newerCount: LiveData<Int> = data.switchMap {
+//        val id = it.posts.firstOrNull()?.id ?: 0L
+//        repository.getNewer(id)
+//            .catch { e -> e.printStackTrace() }
+//            .flowOn(Dispatchers.Default)
+//    }
 
     init {
         loadPosts()

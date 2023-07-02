@@ -9,7 +9,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import kotlinx.coroutines.flow.observeOn
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -21,6 +23,7 @@ import ru.netology.nmedia.viewmodel.AuthViewModel
 import ru.netology.nmedia.viewmodel.DataModel
 import ru.netology.nmedia.viewmodel.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -109,20 +112,30 @@ class FeedFragment : Fragment() {
             binding.connectionLost.isVisible = state.connectionError
         }
 
-        viewModel.data.observe(viewLifecycleOwner) { data ->
-            adapter.submitList(data.posts)
-            binding.emptyText.isVisible = data.empty
+        lifecycleScope.launchWhenCreated {
+            viewModel.data.collectLatest {
+                adapter.submitData(it)
+            }
         }
 
         binding.retryButton.setOnClickListener {
             viewModel.loadPosts()
         }
 
+        lifecycleScope.launchWhenCreated {
+            adapter.loadStateFlow.collectLatest {
+                it.refresh is LoadState.Loading
+                        || it.append is LoadState.Loading
+                        || it.prepend is LoadState.Loading
+            }
+        }
+
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.state.observe(viewLifecycleOwner, { state ->
-                binding.swipeRefresh.isRefreshing = state.refreshing
-            })
-            viewModel.refreshPosts()
+            adapter.refresh()
+//            viewModel.state.observe(viewLifecycleOwner, { state ->
+//                binding.swipeRefresh.isRefreshing = state.refreshing
+//            })
+//            viewModel.refreshPosts()
         }
 
         //Add post button
@@ -130,11 +143,11 @@ class FeedFragment : Fragment() {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
 
-        viewModel.newerCount.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.newerPostLoad.show()
-            }
-        }
+//        viewModel.newerCount.observe(viewLifecycleOwner) {
+//            if (it > 0) {
+//                binding.newerPostLoad.show()
+//            }
+//        }
 
         binding.newerPostLoad.setOnClickListener {
             binding.newerPostLoad.hide()

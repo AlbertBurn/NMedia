@@ -1,5 +1,7 @@
 package ru.netology.nmedia.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -33,20 +35,15 @@ class PostRepositoryImpl @Inject constructor(
     private val mediaService: SMediaService,
 ) : PostRepository {
 
-//    private val client = OkHttpClient.Builder()
-//        .connectTimeout(30, TimeUnit.SECONDS)
-//        .build()
-//    private val gson = Gson()
-//    private val typeToken = object : TypeToken<List<Post>>() {}
-//
-//    companion object {
-//        private const val BASE_URL = "http://10.0.2.2:9999"
-//        private val jsonType = "application/json".toMediaType()
-//    }
 
-    override val data = postDao.getAll()
-        .map(List<PostEntity>::toDto)
-        .flowOn(Dispatchers.Default)
+    override val data = Pager(
+        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+        pagingSourceFactory = {
+            PostPagingSource(
+                postsApiService
+            )
+        }
+    ).flow
 
     override fun getNewer(id: Long): Flow<Int> = flow {
         while (true) {
