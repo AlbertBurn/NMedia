@@ -85,10 +85,10 @@ class PostRepositoryImpl @Inject constructor(
 
             val response = mediaService.uploadPhoto(media)
             if (!response.isSuccessful) {
-                throw ApiError(response.code(), response.message())
+                throw ApiError(response.message())
             }
 
-            return response.body() ?: throw ApiError(response.code(), response.message())
+            return response.body() ?: throw ApiError(response.message())
         } catch (e: IOException) {
             throw NetworkError
         }
@@ -98,10 +98,10 @@ class PostRepositoryImpl @Inject constructor(
         val response = postsApiService.updateUser(login, pass)
 
         if (!response.isSuccessful) {
-            throw ApiError(response.code(), response.message())
+            throw ApiError(response.message())
         }
 
-        return response.body() ?: throw ApiError(response.code(), response.message())
+        return response.body() ?: throw ApiError(response.message())
     }
 
     override suspend fun deleteByIdAsync(id: Long) {
@@ -115,9 +115,9 @@ class PostRepositoryImpl @Inject constructor(
         try {
             val response = postsApiService.save(post)
             if (!response.isSuccessful) {
-                throw ApiError(response.code(), response.message())
+                throw ApiError(response.message())
             }
-            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            val body = response.body() ?: throw ApiError(response.message())
             postDao.insert(PostEntity.fromDto(body))
         } catch (e: IOException) {
             throw NetworkError
@@ -135,9 +135,9 @@ class PostRepositoryImpl @Inject constructor(
                 )
             )
             if (!response.isSuccessful) {
-                throw ApiError(response.code(), response.message())
+                throw ApiError(response.message())
             }
-            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            val body = response.body() ?: throw ApiError(response.message())
             postDao.insert(PostEntity.fromDto(body))
         } catch (e: IOException) {
             throw NetworkError
@@ -151,7 +151,7 @@ class PostRepositoryImpl @Inject constructor(
             MultipartBody.Part.createFormData("file", photo.file!!.name, photo.file.asRequestBody())
         )
 
-        return response.body() ?: throw ApiError(response.code(), response.message())
+        return response.body() ?: throw ApiError(response.message())
     }
 
     override suspend fun unLikeByIdAsync(post: Post) {
