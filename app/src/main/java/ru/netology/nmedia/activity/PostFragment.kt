@@ -43,11 +43,7 @@ class PostFragment : Fragment() {
 
 
         with(binding.scrollContent) {
-            viewModel.data.observe(viewLifecycleOwner) { feedposts ->
-                dataModel.postIdMessage.observe(viewLifecycleOwner) { postIdClicked ->
-
-                    val post = feedposts.posts.find { it.id == postIdClicked }
-
+            viewModel.observePostById(requireNotNull(dataModel.postIdMessage.value)).observe(viewLifecycleOwner) { post ->
 
                     if (post != null) {
                         author.text = post.author
@@ -66,11 +62,6 @@ class PostFragment : Fragment() {
                         if (post.attachment != null) {
                             this.attachmentImage.isVisible = true
 
-//                            attachmentImage.apply {
-//                                setImageURI(Uri.parse(post.attachment.toString()))
-//                                requestFocus()
-//                                start()
-//                            }
                             val urlAttachments =
                                 "http://10.0.2.2:9999/media/${post.attachment?.url}"
                             Glide.with(this.attachmentImage)
@@ -142,10 +133,6 @@ class PostFragment : Fragment() {
                                                 R.id.action_postFragment_to_editPostFragment,
                                                 bundle
                                             )
-                                            //                                            findNavController().navigate(R.id.action_postFragment_to_editPostFragment,
-                                            //                                                Bundle().apply {
-                                            //                                                    textArg = post.content
-                                            //                                                })
                                             true
                                         }
                                         else -> false
@@ -154,7 +141,7 @@ class PostFragment : Fragment() {
                             }.show()
                         }
                     }
-                }
+
             }
         }
         return binding.root

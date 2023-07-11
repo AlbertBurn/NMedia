@@ -59,6 +59,9 @@ interface PostDao {
     @Query("SELECT * FROM PostEntity WHERE id = :id")
     suspend fun getById(id: Long) : PostEntity
 
+    @Query("SELECT * FROM PostEntity WHERE id = :id")
+    fun observeById(id: Long) : Flow<PostEntity>
+
     @Query("""
         UPDATE PostEntity SET
         isRead = 1

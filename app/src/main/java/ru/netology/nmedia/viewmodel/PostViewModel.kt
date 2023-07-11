@@ -179,4 +179,7 @@ class PostViewModel @Inject constructor(
     fun changePhoto(photoModel: PhotoModel?) {
         _photoState.value = photoModel
     }
+
+    fun observePostById(id: Long): LiveData<Post?> = repository.observeById(id)
+        .asLiveData(Dispatchers.Default)
 }

@@ -22,6 +22,8 @@ interface PostRepository {
     suspend fun likeByIdAsync(post: Post)
     fun shareById(id : Long)
 
+    fun observeById(id: Long) : Flow<Post?>
+
     suspend fun uploadPhoto(uploadedMedia : MediaUpload) : Media
 
     suspend fun signIn(login: String, pass: String) : AuthState

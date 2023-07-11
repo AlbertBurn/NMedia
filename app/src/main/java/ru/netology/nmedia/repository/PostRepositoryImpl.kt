@@ -174,4 +174,6 @@ class PostRepositoryImpl @Inject constructor(
         val body = response.body() ?: throw RuntimeException("body is null")
         postDao.getById(body.id)
     }
+
+    override fun observeById(id: Long): Flow<Post?> = postDao.observeById(id).map { it?.toDto() }
 }
