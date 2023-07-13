@@ -1,7 +1,9 @@
 package ru.netology.nmedia.repository
 
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -33,17 +35,16 @@ class PostRepositoryImpl @Inject constructor(
     private val postDao: PostDao,
     private val postsApiService: PostsApiService,
     private val mediaService: SMediaService,
+    remoteMediator: PostRemoteMediator
 ) : PostRepository {
 
-
+    @OptIn(ExperimentalPagingApi::class)
     override val data = Pager(
-        config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-        pagingSourceFactory = {
-            PostPagingSource(
-                postsApiService
-            )
-        }
+        config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+        pagingSourceFactory = postDao::pagingSource,
+        remoteMediator = remoteMediator
     ).flow
+        .map { it.map(PostEntity::toDto)}
 
     override fun getNewer(id: Long): Flow<Int> = flow {
         while (true) {

@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
+import com.bumptech.glide.Glide.with
 
-//typealias OnLikeListener = (post: Post) -> Unit
+
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
