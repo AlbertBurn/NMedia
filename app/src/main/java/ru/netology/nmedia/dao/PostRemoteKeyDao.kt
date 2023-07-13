@@ -7,6 +7,7 @@ import androidx.room.Query
 import ru.netology.nmedia.entity.PostRemoteKeyEntity
 
 @Dao
+
 interface PostRemoteKeyDao {
     @Query("SELECT COUNT(*) == 0 FROM PostRemoteKeyEntity")
     suspend fun isEmpty() : Boolean

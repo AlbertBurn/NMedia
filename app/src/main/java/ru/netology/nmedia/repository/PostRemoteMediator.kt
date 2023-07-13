@@ -11,10 +11,11 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 import ru.netology.nmedia.entity.PostRemoteKeyEntity
 import ru.netology.nmedia.error.ApiError
+import javax.inject.Inject
 
 
 @OptIn(ExperimentalPagingApi::class)
-class PostRemoteMediator(
+class PostRemoteMediator @Inject constructor(
     private val apiService: PostsApiService,
     private val dao: PostDao,
     private val postRemoteKeyDao: PostRemoteKeyDao,

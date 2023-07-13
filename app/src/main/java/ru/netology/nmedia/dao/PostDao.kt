@@ -3,6 +3,7 @@ package ru.netology.nmedia.dao
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.TypeConverter
@@ -25,7 +26,7 @@ interface PostDao {
     @Insert(onConflict = REPLACE)
     suspend fun insert(post: PostEntity)
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(posts: List<PostEntity>)
 
     @Query("UPDATE PostEntity SET content = :content WHERE id = :id")
